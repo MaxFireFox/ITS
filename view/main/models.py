@@ -1,9 +1,8 @@
 from django.db import models
-from datetime import datetime
 
 
 class Log_table(models.Model):
-    log_time = models.DateTimeField('Дата/Время', default=datetime.now())
+    log_time = models.DateTimeField('Дата/Время', auto_now_add=True)
     text = models.CharField('Текст', max_length=250)
     height = models.IntegerField('Высота экрана', default=500)
     width = models.IntegerField('Ширина экрана', default=500)

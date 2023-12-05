@@ -1,6 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Log_table
 from .forms import Log_tableForm, Log_tableForm2
+from .make_video import make_video
+from wsgiref.util import FileWrapper
 
 
 def start(request):
@@ -9,6 +12,9 @@ def start(request):
         form = Log_tableForm2(request.POST)
         if form.is_valid():
             form.save()
+            for log in Log_table.objects.order_by('-log_time'):
+                make_video(log.text)
+                break
             return redirect('result')
         else:
             error = 'not right'
@@ -28,6 +34,10 @@ def defined(request):
         form = Log_tableForm(request.POST)
         if form.is_valid():
             form.save()
+            for log in Log_table.objects.order_by('-log_time'):
+                make_video(log.text, log.height, log.width,
+                           user_scale=log.scale, user_thickness=log.thickness)
+                break
             return redirect('result')
         else:
             error = 'not right'
@@ -43,7 +53,10 @@ def defined(request):
 
 
 def result(request):
-    return render(request, 'main/success.html')
+    file = FileWrapper(open('main/media/main/result.mp4', 'rb'))
+    response = HttpResponse(file, content_type='video/mp4')
+    response['Content-Disposition'] = 'attachment; filename=your_string.mp4'
+    return response
 
 
 def entrylogs(request):
