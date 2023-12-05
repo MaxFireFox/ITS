@@ -7,8 +7,8 @@ def add_text(background, text: str, coordinates: tuple[int, int], font, scale: i
     return cv2.putText(background.copy(), text, coordinates, font, scale, color=color, thickness=thickness)
 
 
-def make_video(user_text: str, user_height=500, user_width=500, user_font=cv2.FONT_HERSHEY_COMPLEX, user_scale=5,
-               user_color=(250, 250, 250), user_thickness=3):
+def make_video(user_text: str, user_height=100, user_width=100, user_font=cv2.FONT_HERSHEY_COMPLEX, user_scale=1,
+               user_color=(250, 250, 250), user_thickness=1):
     # задаём исходные данные
     height = user_height
     width = user_width
@@ -32,14 +32,14 @@ def make_video(user_text: str, user_height=500, user_width=500, user_font=cv2.FO
         return add_text(image, text, coordinates, font, scale, color, thickness)
 
     text = user_text
-    step = user_scale * 10
     frame_rate = 15
+    step = (30 * len(text) * scale + width) // (3 * frame_rate)
 
     vid_name = "my_running_string"
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out_scr = cv2.VideoWriter(f"{vid_name}.mp4", fourcc, frame_rate, (width, height))
     position = coordinates_initial[0]
-    while position > -step*2*len(text):
+    while position > -30*scale*len(text):
         frame = add_text2(text, (position, coordinates_initial[1]))
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         out_scr.write(frame)
