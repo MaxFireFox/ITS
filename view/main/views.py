@@ -1,11 +1,30 @@
 from django.shortcuts import render, redirect
 from .models import Log_table
-from .forms import Log_tableForm
+from .forms import Log_tableForm, Log_tableForm2
 
 
 def start(request):
+    error = ''
     if request.method == 'POST':
-        error = ''
+        form = Log_tableForm2(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('result')
+        else:
+            error = 'not right'
+
+    form = Log_tableForm()
+
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'main/start.html', data)
+
+
+def defined(request):
+    error = ''
+    if request.method == 'POST':
         form = Log_tableForm(request.POST)
         if form.is_valid():
             form.save()
@@ -16,17 +35,10 @@ def start(request):
     form = Log_tableForm()
 
     data = {
-        'form': form
+        'form': form,
+        'error': error
     }
-    return render(request, 'main/start.html', data)
 
-
-def defined(request):
-    form = Log_tableForm()
-
-    data = {
-        'form': form
-    }
     return render(request, 'main/changed.html', data)
 
 

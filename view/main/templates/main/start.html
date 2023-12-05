@@ -9,7 +9,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.text }}<br>
-
+            <span>{{ error }}</span>
             <button class="btn btn-success" type="submit"> Run </button>
         </form>
     </div>

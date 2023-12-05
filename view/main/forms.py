@@ -5,7 +5,7 @@ from django.forms import ModelForm, TextInput, NumberInput
 class Log_tableForm(ModelForm):
     class Meta:
         model = Log_table
-        fields = {'log_time', 'text', 'height', 'width', 'scale', 'thickness'}
+        fields = {'text', 'height', 'width', 'scale', 'thickness'}
 
         widgets = {
             'text': TextInput(attrs={
@@ -27,5 +27,18 @@ class Log_tableForm(ModelForm):
             'thickness': NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Толщина шрифта'
+            })
+        }
+
+
+class Log_tableForm2(ModelForm):
+    class Meta:
+        model = Log_table
+        fields = {'text'}
+
+        widgets = {
+            'text': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Текст'
             })
         }
