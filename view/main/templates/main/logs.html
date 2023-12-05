@@ -1,0 +1,19 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} Requests logs {% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>Log table</h1>
+        {% if logs%}
+        {% for log in logs %}
+            <div> class="alert alert-success"
+                <h3>{{log.log_time}}</h3>
+                <p>{{log.text}}</p>
+                <p>Window height: {{log.height}}; window width: {{log.width}};
+                    font scale: {{log.scale}}; font thickness: {{log.thickness}};</p>
+            </div>
+        {%endfor%}
+        {%endif%}
+    </div>
+{% endblock %}
