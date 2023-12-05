@@ -1,0 +1,19 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} User entry parameters {% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h1>User-defined</h1>
+        <p>You can enter your text and preferred window size as well as text style below</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.text }}<br>
+            {{ form.height }}<br>
+            {{ form.width }}<br>
+            {{ form.scale }}<br>
+            {{ form.thickness }}<br>
+            <button class="btn btn-success" type="submit"> Run </button>
+        </form>
+    </div>
+{% endblock %}

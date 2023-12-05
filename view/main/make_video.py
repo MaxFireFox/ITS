@@ -1,6 +1,6 @@
+from math import ceil
 import numpy as np
 import cv2
-from math import ceil
 
 
 def add_text(background, text: str, coordinates: tuple[int, int], font, scale: int,
@@ -22,7 +22,7 @@ def make_video(user_text: str, user_height=100, user_width=100, user_font=cv2.FO
     text = user_text
     text_size, baseline = cv2.getTextSize(text, user_font, user_scale, user_thickness)
     text_length = text_size[0]
-    coordinates_initial = (width, height//2 + text_size[1]//2)
+    coordinates_initial = (width, height // 2 + text_size[1] // 2)
     frame_rate = 15
     step_f = (text_length + width) / (3 * frame_rate)
     step = int(step_f)
@@ -41,12 +41,11 @@ def make_video(user_text: str, user_height=100, user_width=100, user_font=cv2.FO
         """
         return add_text(image, text, coordinates, font, scale, color, thickness)
 
-    vid_name = "my_running_string"
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out_scr = cv2.VideoWriter(f"{vid_name}.mp4", fourcc, frame_rate, (width, height))
+    out_scr = cv2.VideoWriter("main/media/main/result.mp4", fourcc, frame_rate, (width, height))
     position = coordinates_initial[0]
-    while position >= - text_length:
+    while position >= -text_length:
         frame = add_text2(text, (position, coordinates_initial[1]))
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         out_scr.write(frame)
-        position -= step2
+        position -= step
