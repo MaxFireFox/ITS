@@ -4,8 +4,10 @@ from .models import Log_table
 from .forms import Log_tableForm, Log_tableForm2
 from .make_video import make_video
 from wsgiref.util import FileWrapper
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def start(request):
     error = ''
     if request.method == 'POST':
@@ -28,6 +30,7 @@ def start(request):
     return render(request, 'main/start.html', data)
 
 
+@csrf_exempt
 def defined(request):
     error = ''
     if request.method == 'POST':
@@ -52,6 +55,7 @@ def defined(request):
     return render(request, 'main/changed.html', data)
 
 
+@csrf_exempt
 def result(request):
     file = FileWrapper(open('main/media/main/result.mp4', 'rb'))
     response = HttpResponse(file, content_type='video/mp4')
